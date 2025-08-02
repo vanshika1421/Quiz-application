@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliQuest</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Global Floating Elements for Blue Background -->
+    <div class="global-floating-elements">
+        <div class="global-float-circle global-float-1"></div>
+        <div class="global-float-circle global-float-2"></div>
+        <div class="global-float-circle global-float-3"></div>
+        <div class="global-float-circle global-float-4"></div>
+        <div class="global-float-diamond global-diamond-1"></div>
+        <div class="global-float-diamond global-diamond-2"></div>
+        <div class="global-float-hexagon global-hex-1"></div>
+        <div class="global-float-hexagon global-hex-2"></div>
+        <div class="global-float-star global-star-1"></div>
+        <div class="global-float-star global-star-2"></div>
+        <div class="global-float-wave global-wave-1"></div>
+        <div class="global-float-wave global-wave-2"></div>
+    </div>
+    
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen active" id="welcome-screen">
+            <!-- Floating Shapes Container -->
+            <div class="floating-shapes"></div>
+            
+            <!-- Additional Floating Elements -->
+            <div class="floating-elements">
+                <div class="floating-circle floating-circle-1"></div>
+                <div class="floating-circle floating-circle-2"></div>
+                <div class="floating-circle floating-circle-3"></div>
+                <div class="floating-triangle floating-triangle-1"></div>
+                <div class="floating-triangle floating-triangle-2"></div>
+                <div class="floating-square floating-square-1"></div>
+                <div class="floating-square floating-square-2"></div>
+            </div>
+            
+            <!-- Sparkle Effect -->
+            <div class="sparkles"></div>
+            
+            <div class="welcome-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>IntelliQuest</h1>
+                </div>
+                <p class="welcome-text">Test your knowledge with our interactive quiz!</p>
+                <div class="quiz-info">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Timed Questions</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Multiple Subjects</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Friendly</span>
+                    </div>
+                </div>
+                <button class="start-btn" id="start-setup">
+                    <i class="fas fa-cog"></i>
+                    Setup Quiz
+                </button>
+            </div>
+        </div>
+
+        <!-- Setup Screen -->
+        <div class="setup-screen" id="setup-screen">
+            <div class="setup-content">
+                <div class="setup-header">
+                    <h2><i class="fas fa-user-cog"></i> Quiz Setup</h2>
+                    <p>Please fill in your details to customize your quiz experience</p>
+                </div>
+                
+                <form class="setup-form" id="setup-form">
+                    <div class="form-group">
+                        <label for="user-name">
+                            <i class="fas fa-user"></i>
+                            Your Name
+                        </label>
+                        <input type="text" id="user-name" name="userName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="difficulty-level">
+                            <i class="fas fa-signal"></i>
+                            Difficulty Level
+                        </label>
+                        <select id="difficulty-level" name="difficulty" required>
+                            <option value="">Select Difficulty</option>
+                            <option value="easy">Easy (10 seconds per question)</option>
+                            <option value="medium">Medium (10 seconds per question)</option>
+                            <option value="hard">Hard (15 seconds per question)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject-selection">
+                            <i class="fas fa-book"></i>
+                            Subject
+                        </label>
+                        <select id="subject-selection" name="subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="science">Science</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="currentAffairs">Current Affairs</option>
+                            <option value="history">History</option>
+                            <option value="webDevelopment">Web Development</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary" id="back-to-welcome">
+                            <i class="fas fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button type="button" class="btn primary" id="show-rules">
+                            View Rules
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Rules Screen -->
+        <div class="rules-screen" id="rules-screen">
+            <div class="rules-content">
+                <div class="rules-header">
+                    <h2><i class="fas fa-list-check"></i> Quiz Rules</h2>
+                </div>
+                
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <i class="fas fa-clock text-primary"></i>
+                        <div>
+                            <h4>Time Limit</h4>
+                            <p>Each question has a time limit based on difficulty level. Answer before time runs out!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <i class="fas fa-mouse-pointer text-primary"></i>
+                        <div>
+                            <h4>Selection</h4>
+                            <p>Click on your chosen answer and then click 'Next' to proceed to the next question.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <i class="fas fa-ban text-warning"></i>
+                        <div>
+                            <h4>No Going Back</h4>
+                            <p>Once you move to the next question, you cannot go back to change your answer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <i class="fas fa-trophy text-success"></i>
+                        <div>
+                            <h4>Scoring</h4>
+                            <p>Each correct answer gives you points. Your final score will be shown at the end.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <i class="fas fa-mobile-alt text-info"></i>
+                        <div>
+                            <h4>Device Compatibility</h4>
+                            <p>This quiz works on all devices. For best experience, use landscape mode on mobile.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-summary" id="quiz-summary">
+                    <h3>Your Quiz Details:</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="label">Name:</span>
+                            <span class="value" id="summary-name">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Subject:</span>
+                            <span class="value" id="summary-subject">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Difficulty:</span>
+                            <span class="value" id="summary-difficulty">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Time per Question:</span>
+                            <span class="value" id="summary-time">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Total Questions:</span>
+                            <span class="value" id="summary-questions">10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rules-actions">
+                    <button type="button" class="btn secondary" id="back-to-setup">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Setup
+                    </button>
+                    <button type="button" class="btn primary" id="start-quiz">
+                        <i class="fas fa-play"></i>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quiz-screen">
+            <div class="quiz-header">
+                <div class="user-info">
+                    <span class="user-name" id="quiz-user-name">User</span>
+                    <span class="quiz-subject" id="quiz-subject">Subject</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="question-counter" id="question-counter">1 / 10</span>
+                </div>
+                <div class="timer" id="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="time-remaining">5</span>s
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-container">
+                    <h2 class="question" id="question"></h2>
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Options will be generated dynamically -->
+                </div>
+
+                <div class="quiz-controls">
+                    <button class="btn secondary" id="prev-btn" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button class="btn primary" id="next-btn" disabled>
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen" id="results-screen">
+            <div class="results-content">
+                <div class="score-circle">
+                    <div class="score-inner">
+                        <span class="score-percentage" id="score-percentage">0%</span>
+                        <span class="score-text">Score</span>
+                    </div>
+                </div>
+                
+                <h2 class="results-title" id="results-title">Congratulations!</h2>
+                <p class="results-message" id="results-message">You did great!</p>
+                
+                <div class="results-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="correct-answers">0</div>
+                        <div class="stat-label">Correct</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="incorrect-answers">0</div>
+                        <div class="stat-label">Incorrect</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-time">0</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn primary" id="restart-quiz">
+                        <i class="fas fa-redo"></i>
+                        Take Quiz Again
+                    </button>
+                    <button class="btn secondary" id="share-results">
+                        <i class="fas fa-share"></i>
+                        Share Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
