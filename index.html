@@ -247,6 +247,24 @@
                     <!-- Options will be generated dynamically -->
                 </div>
 
+                <div class="ai-explanation-container" id="ai-explanation-container" style="display: none;">
+                    <button class="btn ai-explain-btn" id="ai-explain-btn">
+                        <i class="fas fa-brain"></i>
+                        Explain Answer with AI
+                    </button>
+                    <div class="ai-explanation" id="ai-explanation" style="display: none;">
+                        <div class="explanation-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>AI Explanation</span>
+                        </div>
+                        <div class="explanation-content" id="explanation-content"></div>
+                        <div class="explanation-loading" id="explanation-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Generating explanation...</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="quiz-controls">
                     <button class="btn secondary" id="prev-btn" disabled>
                         <i class="fas fa-arrow-left"></i>

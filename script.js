@@ -45,6 +45,13 @@ class QuizApp {
         this.quizUserName = document.getElementById('quiz-user-name');
         this.quizSubject = document.getElementById('quiz-subject');
         
+        // AI Explanation elements
+        this.aiExplanationContainer = document.getElementById('ai-explanation-container');
+        this.aiExplainBtn = document.getElementById('ai-explain-btn');
+        this.aiExplanation = document.getElementById('ai-explanation');
+        this.explanationContent = document.getElementById('explanation-content');
+        this.explanationLoading = document.getElementById('explanation-loading');
+        
         // Results screen elements
         this.restartBtn = document.getElementById('restart-quiz');
         this.shareBtn = document.getElementById('share-results');
@@ -346,6 +353,7 @@ class QuizApp {
         // Quiz screen
         this.nextBtn.addEventListener('click', () => this.nextQuestion());
         this.prevBtn.addEventListener('click', () => this.previousQuestion());
+        this.aiExplainBtn.addEventListener('click', () => this.explainAnswerWithAI());
         
         // Results screen
         this.restartBtn.addEventListener('click', () => this.restartQuiz());
@@ -479,6 +487,11 @@ class QuizApp {
         // Clear previous options
         this.optionsContainer.innerHTML = '';
         
+        // Hide AI explanation container
+        this.aiExplanationContainer.style.display = 'none';
+        this.aiExplanation.style.display = 'none';
+        this.explanationLoading.style.display = 'none';
+        
         // Create option elements
         question.options.forEach((option, index) => {
             const optionElement = document.createElement('div');
@@ -490,6 +503,8 @@ class QuizApp {
             if (this.userAnswers[this.currentQuestionIndex] === index) {
                 optionElement.classList.add('selected');
                 this.nextBtn.disabled = false;
+                // Show AI explanation container if answer was already selected
+                this.aiExplanationContainer.style.display = 'block';
             }
             
             this.optionsContainer.appendChild(optionElement);
@@ -517,8 +532,87 @@ class QuizApp {
         // Enable next button
         this.nextBtn.disabled = false;
         
+        // Show AI explanation container
+        this.aiExplanationContainer.style.display = 'block';
+        this.aiExplanation.style.display = 'none';
+        this.aiExplainBtn.disabled = false;
+        this.aiExplainBtn.textContent = 'Explain Answer with AI';
+        this.aiExplainBtn.innerHTML = '<i class="fas fa-brain"></i> Explain Answer with AI';
+        
         // Remove auto-advance - user must click Next button to proceed
     }
+    
+    // Explain Answer with AI
+    async explainAnswerWithAI() {
+        const currentQuestion = this.questions[this.currentQuestionIndex];
+        const correctAnswer = currentQuestion.options[currentQuestion.correct];
+        const userAnswer = this.userAnswers[this.currentQuestionIndex] !== undefined 
+            ? currentQuestion.options[this.userAnswers[this.currentQuestionIndex]] 
+            : 'No answer selected';
+
+        // Show loading state
+        this.aiExplainBtn.disabled = true;
+        this.aiExplainBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+        this.explanationLoading.style.display = 'flex';
+        this.aiExplanation.style.display = 'none';
+
+        try {
+            // Call backend API instead of OpenAI directly
+            const response = await fetch('http://localhost:5000/api/explain', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    question: currentQuestion.question,
+                    options: currentQuestion.options,
+                    correctAnswer: correctAnswer,
+                    userAnswer: userAnswer
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTP ${response.status}`);
+            }
+
+            const data = await response.json();
+            const explanation = data.explanation;
+
+            if (!explanation) {
+                throw new Error('No explanation returned from the server.');
+            }
+
+            // Display explanation
+            this.explanationContent.textContent = explanation;
+            this.explanationLoading.style.display = 'none';
+            this.aiExplanation.style.display = 'block';
+
+            // Reset button
+            this.aiExplainBtn.disabled = false;
+            this.aiExplainBtn.innerHTML = '<i class="fas fa-check"></i> Explanation Generated';
+
+        } catch (error) {
+            console.error('Error calling backend API:', error);
+
+            const message = error.message || '';
+            if (message.includes('Failed to fetch') || message.includes('CORS')) {
+                this.showAIError('Unable to connect to the backend server. Make sure the server is running on port 5000.');
+            } else {
+                this.showAIError(`Sorry, I couldn't generate an explanation right now. ${message}`);
+            }
+        }
+    }
+
+    showAIError(message) {
+        this.explanationContent.textContent = message;
+        this.explanationLoading.style.display = 'none';
+        this.aiExplanation.style.display = 'block';
+        this.aiExplainBtn.disabled = false;
+        this.aiExplainBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Try Again';
+    }
+
+
     
     // Next Question
     nextQuestion() {
